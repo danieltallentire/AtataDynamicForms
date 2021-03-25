@@ -13,10 +13,9 @@ namespace AtataDynamicFormTester.Controls
         [TermFindSettings(TargetAttributeType = typeof(FindByIdAttribute), Match = TermMatch.StartsWith)]
         public CheckBox<TOwner> Checkbox { get; set; }
 
-        [FindByClass("form-control", Timeout = 0.01)]
+        [FindByXPath(".//*[contains(concat(' ', normalize-space(@class), ' '), ' form-control ')]/descendant-or-self::input[@type='date']", Timeout = 0.01)]
         public DateInput<TOwner> DateInput { get; set; }
 
-        // represents a select box
         [FindByClass("form-control", Timeout = 0.01)]
         public Select<TOwner> Select { get; set; }
 

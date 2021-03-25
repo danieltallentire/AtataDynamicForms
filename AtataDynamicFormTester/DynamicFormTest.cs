@@ -19,6 +19,7 @@ namespace AtataDynamicFormTester
                 .UseChrome()
                 .AddLogConsumer(new XUnitLogConsumer(output))
                 .WithMinLevel(LogLevel.Trace)
+                .AddScreenshotFileSaving()
                 .Build();
 
             ValueRandomizer.RegisterRandomizer<DateTime>((meta) =>
@@ -32,10 +33,14 @@ namespace AtataDynamicFormTester
         public void FillPrechatSurvey()
         {
             Go.To<ChatStartPage>(url: "http://localhost/newchat/chat.aspx?domain=www.parkersoftware.com")
+                .Report.Screenshot("Start Chat")
                 .SetRandom()
+                .Report.Screenshot("Filled Out")
                 .StartChat.ClickAndGo()
+                .Report.Screenshot("Chatting")
                 .Wait(5)
-                .CloseWindowButton.Click();            
+                .CloseWindowButton.Click()
+                .Report.Screenshot("Finished");
         }
 
         protected virtual void Dispose(bool disposing)
