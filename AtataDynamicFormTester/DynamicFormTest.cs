@@ -20,6 +20,11 @@ namespace AtataDynamicFormTester
                 .AddLogConsumer(new XUnitLogConsumer(output))
                 .WithMinLevel(LogLevel.Trace)
                 .Build();
+
+            ValueRandomizer.RegisterRandomizer<DateTime>((meta) =>
+            {
+                return DateTime.Now.AddDays(0 - Randomizer.GetInt(0, 10000));
+            });
         }
 
 
