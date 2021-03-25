@@ -10,7 +10,6 @@ namespace AtataDynamicFormTester
     [WaitForLoadingIndicator]
     class ChatStartPage : Page<_>
     {
-        [ControlDefinition(ContainingClass = "input-group")]
         public ControlList<DynamicControl<_>, _> SurveyFields { get; private set; }
 
         public Button<Chatting, _> StartChat { get; private set; }
