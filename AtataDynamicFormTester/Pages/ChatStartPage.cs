@@ -1,6 +1,7 @@
 ﻿
 
 using Atata;
+using AtataDynamicFormTester.Controls;
 
 namespace AtataDynamicFormTester
 {
@@ -10,10 +11,14 @@ namespace AtataDynamicFormTester
     class ChatStartPage : Page<_>
     {
         [ControlDefinition(ContainingClass = "input-group")]
-        public ControlList<Input<string, _>, _> SurveyFields { get; private set; }
+        public ControlList<DynamicControl<_>, _> SurveyFields { get; private set; }
 
         public Button<Chatting, _> StartChat { get; private set; }
 
+        /// <summary>
+        /// set the whole survey up with random fields
+        /// </summary>
+        /// <returns></returns>
         public _ SetRandom()
         {
             foreach (var field in SurveyFields)

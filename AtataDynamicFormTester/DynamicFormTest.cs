@@ -27,7 +27,6 @@ namespace AtataDynamicFormTester
         public void FillPrechatSurvey()
         {
             Go.To<ChatStartPage>(url: "http://localhost/newchat/chat.aspx?domain=www.parkersoftware.com")
-                .VisitorName.SetRandom()
                 .SetRandom()
                 .StartChat.ClickAndGo()
                 .Wait(5)
