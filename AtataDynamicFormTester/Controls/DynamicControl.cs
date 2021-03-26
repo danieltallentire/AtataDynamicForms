@@ -3,52 +3,43 @@
 namespace AtataDynamicFormTester.Controls
 {
     [ControlDefinition(ContainingClass = "form-group")]
+    [FindFirst(TargetAllChildren = true)]
     class DynamicControl<TOwner> : Control<TOwner> where TOwner : PageObject<TOwner>
     {
-        [FindByClass("form-control", Timeout = 0.01)]
-        public Input<string, TOwner> Input { get; set; }
+        public TextInput<TOwner> TextInput { get; private set; }
 
         // checkboxes aren't wrapped by a nice form-control wrapper, so have to use a different search method
-        [FindById("fld", Timeout = 0.01)]
-        [TermFindSettings(TargetAttributeType = typeof(FindByIdAttribute), Match = TermMatch.StartsWith)]
-        public CheckBox<TOwner> Checkbox { get; set; }
+        [FindById(TermMatch.StartsWith, "fld")]
+        public CheckBox<TOwner> Checkbox { get; private set; }
 
-        [FindByXPath(".//*[contains(concat(' ', normalize-space(@class), ' '), ' form-control ')]/descendant-or-self::input[@type='date']", Timeout = 0.01)]
-        public DateInput<TOwner> DateInput { get; set; }
+        public DateInput<TOwner> DateInput { get; private set; }
 
-        [FindByClass("form-control", Timeout = 0.01)]
-        public Select<TOwner> Select { get; set; }
+        public EmailInput<TOwner> EmailInput { get; private set; }
+
+        public Select<TOwner> Select { get; private set; }
 
         public void SetRandom()
         {
-            if (Checkbox.Exists(new SearchOptions() { IsSafely = true }))
+            if (Checkbox.IsPresent)
             {
                 Checkbox.Set(true);
             }
-            else if(Select.Exists(new SearchOptions() { IsSafely = true }))
+            else if (Select.IsPresent)
             {
-                Select.Set(Select.Options[Atata.Randomizer.GetInt(0, Select.Options.Count - 1)].Value);
+                Select.Set(Select.Options[Randomizer.GetInt(0, Select.Options.Count - 1)].Value);
             }
-            else if (DateInput.Exists(new SearchOptions() { IsSafely = true}))
+            else if (TextInput.IsPresent)
+            {
+                TextInput.SetRandom();
+            }
+            else if (DateInput.IsPresent)
             {
                 DateInput.SetRandom();
             }
-            else if (Input.Exists(new SearchOptions() { IsSafely = true }))
+            else if (EmailInput.IsPresent)
             {
-                switch (Input.Attributes.Type)
-                {
-                    case "text":
-                        Input.SetRandom();
-                        break;
-                    case "email":
-                        Input.Set(Atata.Randomizer.GetString("{0}@{0}.com"));
-                        break;
-                    default:
-                        // ignore
-                        break;
-
-                }
-            }           
+                EmailInput.Set(Randomizer.GetString("{0}@{0}.com"));
+            }
         }
     }
 }
