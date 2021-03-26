@@ -3,6 +3,7 @@
 namespace AtataDynamicFormTester.Controls
 {
     [ControlDefinition(ContainingClass = "form-group")]
+    [FindFirst(TargetAllChildren = true)]
     class DynamicControl<TOwner> : Control<TOwner> where TOwner : PageObject<TOwner>
     {
         public TextInput<TOwner> TextInput { get; private set; }
